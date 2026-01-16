@@ -54,6 +54,7 @@ export const MeterTable = observer(() => {
               key={meter.id}
               meter={meter}
               index={index}
+              onDelete={(id) => meterStore.deleteMeter(id)}
             />
           ))}
         </tbody>
