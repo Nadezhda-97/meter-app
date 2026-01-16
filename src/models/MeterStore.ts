@@ -5,12 +5,19 @@ import { Meter } from "./Meter";
 
 interface MeterApiData {
   id: string;
-  _type: string[];
+  _type: string | string[];
   installation_date: string;
   is_automatic: boolean;
   initial_values: number[];
   description: string;
   area?: { id: string };
+};
+
+const normalizeType = (type: string | string[]) => {
+  if (Array.isArray(type)) {
+    return type[0];
+  }
+  return type;
 };
 
 export const MeterStore = types
@@ -37,11 +44,12 @@ export const MeterStore = types
 
         self.count = data.count;
         self.meters.replace(
-          data.results.map((meter: MeterApiData) => Meter.create({
+          data.results.map((meter: MeterApiData) => ({
             id: meter.id,
-            _type: meter._type[0],
+            _type: normalizeType(meter._type),
             installation_date: meter.installation_date,
-            is_automatic: meter.is_automatic,
+            is_automatic: Boolean(meter.is_automatic),
+            //is_automatic: meter.is_automatic,
             initial_values: meter.initial_values,
             description: meter.description,
           }))
