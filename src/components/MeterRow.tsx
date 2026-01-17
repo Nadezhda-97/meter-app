@@ -1,6 +1,8 @@
 import React from "react";
+import { observer } from "mobx-react-lite";
 import styled from "styled-components";
 import type { MeterInstance } from "../models/Meter";
+import { useRootStore } from "../hooks/useRootStore";
 
 const Tr = styled.tr`
   &:hover {
@@ -38,7 +40,15 @@ interface MeterRowProps {
   onDelete: (id: string) => void;
 }
 
-export const MeterRow: React.FC<MeterRowProps> = ({ meter, index, onDelete }) => {
+export const MeterRow: React.FC<MeterRowProps> = observer(({ meter, index, onDelete }) => {
+  const { areaStore } = useRootStore();
+
+  const area = areaStore.areas.get(meter.areaId);
+
+  const address = area
+  ? `${area.street}, д. ${area.house}, кв. ${area.apartment ?? "—"}`
+  : "Загрузка...";
+
   const instatallationDate = new Date(meter.installation_date).toLocaleDateString();
   return (
     <Tr>
@@ -47,6 +57,7 @@ export const MeterRow: React.FC<MeterRowProps> = ({ meter, index, onDelete }) =>
       <Td>{instatallationDate}</Td>
       <Td>{meter.is_automatic ? "Да" : "Нет"}</Td>
       <Td>{meter.initial_values.join(", ")}</Td>
+      <Td>{address}</Td>
       <Td>{meter.description || "—"}</Td>
 
       <Td>
@@ -55,4 +66,4 @@ export const MeterRow: React.FC<MeterRowProps> = ({ meter, index, onDelete }) =>
       
     </Tr>
   );
-};
+});
