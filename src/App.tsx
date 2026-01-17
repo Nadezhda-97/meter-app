@@ -1,5 +1,5 @@
-import { RootStoreContext } from "./models/RootStoreContext";
-import { createRootStore } from "./models/RootStore";
+import { RootStoreContext } from "./stores/RootStoreContext";
+import { createRootStore } from "./stores/RootStore";
 import { MeterTable } from "./components/MeterTable";
 import { useState } from "react";
 // import './App.css'
