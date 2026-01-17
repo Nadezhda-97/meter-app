@@ -45,6 +45,7 @@ export const MeterTable = observer(() => {
             <Th>Дата установки</Th>
             <Th>Автоматический</Th>
             <Th>Значение</Th>
+            <Th>Адрес</Th>
             <Th>Примечание</Th>
           </tr>
         </thead>
