@@ -1,6 +1,6 @@
 // хук для доступа к стору
 import { useContext } from "react";
-import { RootStoreContext } from "../models/RootStoreContext";
+import { RootStoreContext } from "../stores/RootStoreContext";
 
 export const useRootStore = () => {
   const context = useContext(RootStoreContext);
