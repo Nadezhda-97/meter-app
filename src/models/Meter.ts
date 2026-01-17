@@ -14,5 +14,3 @@ export const Meter = types.model("Meter", {
 });
 
 export type MeterInstance = Instance<typeof Meter>;
-
-// позже - добавить адрес
