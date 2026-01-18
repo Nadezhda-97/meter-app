@@ -3,6 +3,17 @@
 import { types, flow } from "mobx-state-tree";
 import { Area } from "../models/Area";
 
+interface AreaData {
+  id: string;
+  street: string;
+  house: string;
+  apartment: string | null;
+}
+
+interface AreaResponse {
+  results: AreaData[];
+}
+
 export const AreaStore = types
   .model("AreaStore", {
     areas: types.map(Area),
@@ -26,10 +37,10 @@ export const AreaStore = types
 
         if (!response.ok) return;
 
-        const data = yield response.json();
+        const data = (yield response.json()) as AreaResponse;
 
         // кладём в map
-        data.results.forEach((area: any) => {
+        data.results.forEach((area: AreaData) => {
           self.areas.set(String(area.id), {
             id: area.id,
             street: area.street,
