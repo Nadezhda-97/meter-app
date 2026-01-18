@@ -2,6 +2,7 @@
 
 import { types, flow, getRoot } from "mobx-state-tree";
 import { Meter } from "../models/Meter";
+import type { RootStoreType } from "./RootStore";
 
 interface MeterApiData {
   id: string;
@@ -66,7 +67,7 @@ export const MeterStore = types
           )
         );
 
-        getRoot<any>(self).areaStore.fetchAreas(areaIds);
+        getRoot<RootStoreType>(self).areaStore.fetchAreas(areaIds);
 
       } catch (error) {
         console.error("Failed to fetch meters", error);
