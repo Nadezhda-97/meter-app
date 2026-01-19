@@ -77,22 +77,24 @@ export const MeterStore = types
     }),
 
     deleteMeter: flow(function* (id: string) {
-      /* const fetchOne = flow(function* () {
-      try {
-        const nextOffset = self.offset + self.meters.length;
-        const res = yield fetch(`/c300/api/v4/test/meters/?limit=1&offset=${nextOffset}`);
+      const fetchNextMeter = flow(function* () {
+        try {
+          const nextOffset = self.offset + self.meters.length;
+          const nextRes = yield fetch(`/c300/api/v4/test/meters/?limit=1&offset=${nextOffset}`);
+          if (!nextRes.ok) return;
 
-        if (!res.ok) return;
+          const data = yield nextRes.json();
 
-        const data = yield res.json();
+          const newMeter = mapApiMeter(data.results[0]);
+          self.meters.push(newMeter);
 
-        if (data.results.length > 0) {
-          self.meters.push(mapApiMeter(data.results[0]));
+          if (newMeter.areaId) {
+            getRoot<RootStoreType>(self).areaStore.fetchAreas([newMeter.areaId]);
+          }
+        } catch (error) {
+          console.error("Failed to fetch next meter", error);
         }
-      } catch (error) {
-        console.error("Failed to fetch next meter", error);
-      }
-    }); */
+      })
 
       try {
         const res = yield fetch(`/c300/api/v4/test/meters/${id}/`, { method: 'DELETE' });
@@ -105,20 +107,25 @@ export const MeterStore = types
         self.count -= 1;
 
         // локальный generator
-        try {
+        /* try {
           const nextOffset = self.offset + self.meters.length;
           const nextRes = yield fetch(`/c300/api/v4/test/meters/?limit=1&offset=${nextOffset}`);
           if (!nextRes.ok) return;
 
           const data = yield nextRes.json();
           if (data.results.length > 0) {
-            self.meters.push(mapApiMeter(data.results[0]));
+            const newMeter = mapApiMeter(data.results[0]);
+            self.meters.push(newMeter);
+
+            if (newMeter.areaId) {
+              getRoot<RootStoreType>(self).areaStore.fetchAreas([newMeter.areaId]);
+            }
           }
         } catch (error) {
           console.error("Failed to fetch next meter", error);
-        }
+        } */
 
-        //yield self.fetchMeters(self.offset, self.limit);
+        yield fetchNextMeter();
       } catch (error) {
         console.error("Failed to delete meter", error);
       }
