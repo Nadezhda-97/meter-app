@@ -3,8 +3,8 @@
 import { types } from "mobx-state-tree";
 
 export const Area = types.model("Area", {
-  id: types.identifier, //types.identifierNumber,
-  street: types.string,
-  house: types.string,
+  id: types.identifier,
+  street: types.maybeNull(types.string),
+  house: types.maybeNull(types.string),
   apartment: types.maybeNull(types.string),
 });
