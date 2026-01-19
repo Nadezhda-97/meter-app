@@ -46,15 +46,15 @@ export const MeterRow: React.FC<MeterRowProps> = observer(({ meter, index, onDel
   const area = areaStore.areas.get(meter.areaId);
 
   const address = area
-  ? `${area.street}, д. ${area.house}, кв. ${area.apartment ?? "—"}`
+  ? `ул. ${area.street}, д. ${area.house}, кв. ${area.apartment ?? "—"}`
   : "Загрузка...";
 
-  const instatallationDate = new Date(meter.installation_date).toLocaleDateString();
+  const installationDate = new Date(meter.installation_date).toLocaleDateString("ru-RU");
   return (
     <Tr>
       <Td>{index + 1}</Td>
       <Td>{meter._type === "ColdWaterAreaMeter" ? "ХВС" : "ГВС"}</Td>
-      <Td>{instatallationDate}</Td>
+      <Td>{installationDate}</Td>
       <Td>{meter.is_automatic ? "Да" : "Нет"}</Td>
       <Td>{meter.initial_values.join(", ")}</Td>
       <Td>{address}</Td>
