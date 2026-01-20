@@ -1,20 +1,25 @@
-import { RootStoreContext } from "./stores/RootStoreContext";
-import { createRootStore } from "./stores/RootStore";
-import { MeterTable } from "./components/MeterTable";
 import { useState } from "react";
-// import './App.css'
+
+import { createRootStore } from "./stores/RootStore";
+import { RootStoreContext } from "./stores/RootStoreContext";
+
+import { MeterTable } from "./components/MeterTable";
+import { GlobalStyles } from "./styles/GlobalStyles";
+import { Page, PageTitle } from "./styles/PageLayout";
 
 function App() {
-  //const rootStore = createRootStore();
   const [rootStore] = useState(() => createRootStore());
 
   return (
-      <div>
-        <h1>Список счётчиков</h1>
+      <>
+        <GlobalStyles />
         <RootStoreContext.Provider value={rootStore}>
-          <MeterTable />
+          <Page>
+            <PageTitle>Список счётчиков</PageTitle>
+            <MeterTable />
+          </Page>
         </RootStoreContext.Provider>
-      </div>
+      </>
   )
 }
 
