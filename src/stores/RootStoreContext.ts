@@ -1,5 +1,3 @@
-// провайдер
-
 import { createContext } from "react";
 import type { RootStoreType } from "./RootStore";
 
