@@ -1,4 +1,3 @@
-// хук для доступа к стору
 import { useContext } from "react";
 import { RootStoreContext } from "../stores/RootStoreContext";
 
