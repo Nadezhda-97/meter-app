@@ -1,5 +1,3 @@
-// модель area (адреса)
-
 import { types } from "mobx-state-tree";
 
 export const Area = types.model("Area", {
