@@ -1,30 +1,11 @@
-// таблица со списком счётчиков
-
 import { observer } from "mobx-react-lite";
 import { useEffect } from "react";
+
 import { useRootStore } from "../hooks/useRootStore";
-import { MeterRow } from "./MeterRow";
 import type { MeterInstance } from "../models/Meter";
-import styled from "styled-components";
 
-const TableWrapper = styled.div`
-  max-height: 400px; // пример скролла
-  overflow-y: auto;
-  border: 1px solid #ccc;
-`;
-
-const Table = styled.table`
-  width: 100%;
-  border-collapse: collapse;
-`;
-
-const Th = styled.th`
-  position: sticky;
-  top: 0;
-  background: #f5f5f5;
-  padding: 8px;
-  border-bottom: 1px solid #ccc;
-`;
+import { MeterRow } from "./MeterRow";
+import { TableWrapper, Table, Thead, Th } from "../styles/MeterTableStyles";
 
 export const MeterTable = observer(() => {
   const { meterStore } = useRootStore();
@@ -38,17 +19,18 @@ export const MeterTable = observer(() => {
   return (
     <TableWrapper>
       <Table>
-        <thead>
+        <Thead>
           <tr>
-            <Th>#</Th>
+            <Th>№</Th>
             <Th>Тип</Th>
             <Th>Дата установки</Th>
             <Th>Автоматический</Th>
             <Th>Значение</Th>
             <Th>Адрес</Th>
             <Th>Примечание</Th>
+            <Th></Th>
           </tr>
-        </thead>
+        </Thead>
         <tbody>
           {meterStore.meters.map((meter: MeterInstance, index: number) => (
             <MeterRow
