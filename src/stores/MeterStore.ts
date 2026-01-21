@@ -2,6 +2,7 @@ import { types, flow, getRoot } from 'mobx-state-tree';
 import { Meter } from '../models/Meter';
 import type { RootStoreType } from './RootStore';
 
+const API_BASE = import.meta.env.VITE_API_BASE_URL;
 interface MeterApiData {
   id: string;
   _type: string | string[];
@@ -42,7 +43,7 @@ export const MeterStore = types
       self.loading = true;
       try {
         const res = yield fetch(
-          `/c300/api/v4/test/meters/?limit=${limit}&offset=${offset}`
+          `${API_BASE}/v4/test/meters/?limit=${limit}&offset=${offset}`
         );
 
         if (!res.ok) {
@@ -72,7 +73,7 @@ export const MeterStore = types
         try {
           const nextOffset = self.offset + self.meters.length;
           const nextRes = yield fetch(
-            `https://showroom.eis24.me/c300/api/v4/test/meters/?limit=1&offset=${nextOffset}`
+            `/c300/api/v4/test/meters/?limit=1&offset=${nextOffset}`
           );
           if (!nextRes.ok) return;
 
