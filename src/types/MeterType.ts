@@ -1,1 +1,1 @@
-export type MeterType = "ColdWaterAreaMeter" | "HotWaterAreaMeter";
+export type MeterType = 'ColdWaterAreaMeter' | 'HotWaterAreaMeter';
