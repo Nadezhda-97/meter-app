@@ -13,7 +13,7 @@ export const GlobalStyles = createGlobalStyle`
 
   body {
     margin: 0;
-    font-family: Inter, system-ui, sans-serif;
+    font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
     background: #f3f4f6;
     color: #111827;
     overflow: hidden;
