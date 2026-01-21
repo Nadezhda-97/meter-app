@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const DeleteButton = styled.button`
   opacity: 0;
@@ -33,7 +33,9 @@ export const DeleteButton = styled.button`
 
   svg {
     fill: #b91c1c;
-    transition: fill 0.2s ease, transform 0.1s ease;
+    transition:
+      fill 0.2s ease,
+      transform 0.1s ease;
   }
 
   &:hover svg {
