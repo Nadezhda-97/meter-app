@@ -1,11 +1,11 @@
-import { observer } from "mobx-react-lite";
-import { useEffect } from "react";
+import { observer } from 'mobx-react-lite';
+import { useEffect } from 'react';
 
-import { useRootStore } from "../hooks/useRootStore";
-import type { MeterInstance } from "../models/Meter";
+import { useRootStore } from '../hooks/useRootStore';
+import type { MeterInstance } from '../models/Meter';
 
-import { MeterRow } from "./MeterRow";
-import { TableWrapper, Table, Th } from "../styles/MeterTableStyles";
+import { MeterRow } from './MeterRow';
+import { TableWrapper, Table, Th } from '../styles/MeterTableStyles';
 
 export const MeterTable = observer(() => {
   const { meterStore } = useRootStore();
