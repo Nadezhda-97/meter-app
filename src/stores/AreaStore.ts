@@ -1,5 +1,3 @@
-// store для адресов
-
 import { types, flow } from "mobx-state-tree";
 import { Area } from "../models/Area";
 
@@ -21,7 +19,6 @@ interface AreaResponse {
 const mapApiArea = (area: AreaApiData) => {
   const address = area.house?.address ?? "";
 
-  // парсинг
   const [, streetPart, housePart] = address.match(/ул\s([^,]+),\sд\s(\d+)/) ?? [];
 
   const apartment =
@@ -44,7 +41,6 @@ export const AreaStore = types
   })
   .actions((self) => ({
     fetchAreas: flow(function* (areaIds: string[]) {
-      // оставляем только неизвестные
       const idsToFetch = areaIds.filter(
         (id) => id && !self.areas.has(id)
       );
@@ -54,10 +50,6 @@ export const AreaStore = types
       self.loading = true;
 
       try {
-        /* const response: Response = yield fetch(
-          `/c300/api/v4/test/areas/?id__in=${idsToFetch.join(",")}`
-        ); */
-
         const query = idsToFetch.map((id) => `id__in=${id}`).join("&");
 
         const response: Response = yield fetch(
@@ -68,9 +60,6 @@ export const AreaStore = types
 
         const data = (yield response.json()) as AreaResponse;
 
-        console.log('address', data); // отладка
-
-        // кладём в map
         data.results.forEach((area) => {
           const mapped = mapApiArea(area);
           self.areas.set(mapped.id, mapped);
