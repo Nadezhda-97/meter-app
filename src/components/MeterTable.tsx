@@ -5,7 +5,7 @@ import { useRootStore } from "../hooks/useRootStore";
 import type { MeterInstance } from "../models/Meter";
 
 import { MeterRow } from "./MeterRow";
-import { TableWrapper, Table, Thead, Th } from "../styles/MeterTableStyles";
+import { TableWrapper, Table, Th } from "../styles/MeterTableStyles";
 
 export const MeterTable = observer(() => {
   const { meterStore } = useRootStore();
@@ -19,7 +19,7 @@ export const MeterTable = observer(() => {
   return (
     <TableWrapper>
       <Table>
-        <Thead>
+        <thead>
           <tr>
             <Th>№</Th>
             <Th>Тип</Th>
@@ -30,7 +30,7 @@ export const MeterTable = observer(() => {
             <Th>Примечание</Th>
             <Th></Th>
           </tr>
-        </Thead>
+        </thead>
         <tbody>
           {meterStore.meters.map((meter: MeterInstance, index: number) => (
             <MeterRow
