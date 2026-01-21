@@ -1,6 +1,8 @@
 import { types, flow } from 'mobx-state-tree';
 import { Area } from '../models/Area';
 
+const API_BASE = import.meta.env.VITE_API_BASE_URL;
+
 interface AreaApiData {
   id: string;
   house?: {
@@ -50,7 +52,7 @@ export const AreaStore = types
         const query = idsToFetch.map((id) => `id__in=${id}`).join('&');
 
         const response: Response = yield fetch(
-          `/c300/api/v4/test/areas/?${query}`
+          `${API_BASE}/v4/test/areas/?${query}`
         );
 
         if (!response.ok) return;
