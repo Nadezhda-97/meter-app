@@ -72,7 +72,7 @@ export const MeterStore = types
         try {
           const nextOffset = self.offset + self.meters.length;
           const nextRes = yield fetch(
-            `/c300/api/v4/test/meters/?limit=1&offset=${nextOffset}`
+            `https://showroom.eis24.me/c300/api/v4/test/meters/?limit=1&offset=${nextOffset}`
           );
           if (!nextRes.ok) return;
 
