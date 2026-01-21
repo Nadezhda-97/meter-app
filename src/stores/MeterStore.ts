@@ -3,6 +3,7 @@ import { Meter } from '../models/Meter';
 import type { RootStoreType } from './RootStore';
 
 const API_BASE = import.meta.env.VITE_API_BASE_URL;
+
 interface MeterApiData {
   id: string;
   _type: string | string[];
@@ -73,7 +74,7 @@ export const MeterStore = types
         try {
           const nextOffset = self.offset + self.meters.length;
           const nextRes = yield fetch(
-            `/c300/api/v4/test/meters/?limit=1&offset=${nextOffset}`
+            `${API_BASE}/v4/test/meters/?limit=1&offset=${nextOffset}`
           );
           if (!nextRes.ok) return;
 
@@ -93,7 +94,7 @@ export const MeterStore = types
       });
 
       try {
-        const res = yield fetch(`/c300/api/v4/test/meters/${id}/`, {
+        const res = yield fetch(`${API_BASE}/v4/test/meters/${id}/`, {
           method: 'DELETE',
         });
 
