@@ -1,6 +1,5 @@
 import styled from "styled-components";
-
-export type MeterType = "ColdWaterAreaMeter" | "HotWaterAreaMeter";
+import type { MeterType } from "../types/MeterType";
 
 export const Tr = styled.tr`
   height: 56px;
