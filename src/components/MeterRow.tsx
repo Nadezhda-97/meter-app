@@ -3,12 +3,11 @@ import { observer } from "mobx-react-lite";
 
 import { useRootStore } from "../hooks/useRootStore";
 import type { MeterInstance } from "../models/Meter";
+import type { MeterType } from "../types/MeterType";
 
 import { TrashIcon } from "./TrashIcon";
 import { DeleteButton } from "../styles/DeleteButtonStyles";
 import { Tr, Td, TypeCell, TypeIcon, AddressCell } from "../styles/MeterRowStyles";
-
-type MeterType = "ColdWaterAreaMeter" | "HotWaterAreaMeter";
 
 interface MeterRowProps {
   meter: MeterInstance;
@@ -43,7 +42,7 @@ export const MeterRow: React.FC<MeterRowProps> = observer(({ meter, index, onDel
           {address}
         </AddressCell>
       </Td>
-      <Td>{meter.description || "—"}</Td>
+      <Td>{meter.description || "-"}</Td>
       <Td>
         <DeleteButton onClick={() => onDelete(meter.id)}>
           <TrashIcon />
