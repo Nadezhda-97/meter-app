@@ -1,17 +1,16 @@
-import { types, flow, getRoot } from "mobx-state-tree";
-import { Meter } from "../models/Meter";
-import type { RootStoreType } from "./RootStore";
+import { types, flow, getRoot } from 'mobx-state-tree';
+import { Meter } from '../models/Meter';
+import type { RootStoreType } from './RootStore';
 
 interface MeterApiData {
   id: string;
   _type: string | string[];
   area?: { id: string };
   installation_date: string;
-  is_automatic: boolean | null; //boolean;
+  is_automatic: boolean | null;
   initial_values: number[];
   description: string;
-  
-};
+}
 
 const normalizeType = (type: string | string[]) => {
   if (Array.isArray(type)) {
@@ -23,15 +22,15 @@ const normalizeType = (type: string | string[]) => {
 const mapApiMeter = (meter: MeterApiData) => ({
   id: meter.id,
   _type: normalizeType(meter._type),
-  areaId: meter.area?.id ?? "",
+  areaId: meter.area?.id ?? '',
   installation_date: meter.installation_date,
   is_automatic: Boolean(meter.is_automatic),
   initial_values: meter.initial_values,
-  description: meter.description ?? "",
+  description: meter.description ?? '',
 });
 
 export const MeterStore = types
-  .model("MeterStore", {
+  .model('MeterStore', {
     meters: types.array(Meter),
     count: types.number,
     loading: types.boolean,
@@ -42,7 +41,9 @@ export const MeterStore = types
     fetchMeters: flow(function* (offset = 0, limit = self.limit) {
       self.loading = true;
       try {
-        const res = yield fetch(`/c300/api/v4/test/meters/?limit=${limit}&offset=${offset}`);
+        const res = yield fetch(
+          `/c300/api/v4/test/meters/?limit=${limit}&offset=${offset}`
+        );
 
         if (!res.ok) {
           throw new Error(`HTTP ${res.status}: ${res.statusText}`);
@@ -55,17 +56,12 @@ export const MeterStore = types
         self.offset = offset;
 
         const areaIds = Array.from(
-          new Set(
-            self.meters
-              .map((m) => m.areaId)
-              .filter(Boolean)
-          )
+          new Set(self.meters.map((m) => m.areaId).filter(Boolean))
         );
 
         getRoot<RootStoreType>(self).areaStore.fetchAreas(areaIds);
-
       } catch (error) {
-        console.error("Failed to fetch meters", error);
+        console.error('Failed to fetch meters', error);
       } finally {
         self.loading = false;
       }
@@ -75,7 +71,9 @@ export const MeterStore = types
       const fetchNextMeter = flow(function* () {
         try {
           const nextOffset = self.offset + self.meters.length;
-          const nextRes = yield fetch(`/c300/api/v4/test/meters/?limit=1&offset=${nextOffset}`);
+          const nextRes = yield fetch(
+            `/c300/api/v4/test/meters/?limit=1&offset=${nextOffset}`
+          );
           if (!nextRes.ok) return;
 
           const data = yield nextRes.json();
@@ -84,15 +82,19 @@ export const MeterStore = types
           self.meters.push(newMeter);
 
           if (newMeter.areaId) {
-            getRoot<RootStoreType>(self).areaStore.fetchAreas([newMeter.areaId]);
+            getRoot<RootStoreType>(self).areaStore.fetchAreas([
+              newMeter.areaId,
+            ]);
           }
         } catch (error) {
-          console.error("Failed to fetch next meter", error);
+          console.error('Failed to fetch next meter', error);
         }
-      })
+      });
 
       try {
-        const res = yield fetch(`/c300/api/v4/test/meters/${id}/`, { method: 'DELETE' });
+        const res = yield fetch(`/c300/api/v4/test/meters/${id}/`, {
+          method: 'DELETE',
+        });
 
         if (!res.ok) {
           throw new Error(`HTTP ${res.status}`);
@@ -103,7 +105,7 @@ export const MeterStore = types
 
         yield fetchNextMeter();
       } catch (error) {
-        console.error("Failed to delete meter", error);
+        console.error('Failed to delete meter', error);
       }
-    })
+    }),
   }));
