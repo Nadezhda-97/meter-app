@@ -1,5 +1,3 @@
-// корневой store
-
 import { types } from "mobx-state-tree";
 import type { Instance } from "mobx-state-tree";
 import { MeterStore } from "./MeterStore";
@@ -10,7 +8,6 @@ export const RootStore = types.model("RootStore", {
   areaStore: AreaStore,
 });
 
-// Создаём экземпляр
 export const createRootStore = () => RootStore.create({
   meterStore: {
     meters: [],
@@ -25,5 +22,4 @@ export const createRootStore = () => RootStore.create({
   },
 });
 
-// Тип для использования в компонентах
 export type RootStoreType = Instance<typeof RootStore>;
