@@ -8,8 +8,7 @@ export const TableWrapper = styled.div`
   overflow-y: auto;
 
   background: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  border: 1px solid #ccc;
 `;
 
 export const Table = styled.table`
@@ -26,8 +25,6 @@ export const Th = styled.th`
   background: #f5f7fa;
   color: #6b7280;
 
-  font-size: 13px;
-  font-weight: 500;
   text-align: left;
 
   padding: 16px;
