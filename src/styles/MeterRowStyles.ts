@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import type { MeterType } from "../types/MeterType";
+import styled from 'styled-components';
+import type { MeterType } from '../types/MeterType';
 
 export const Tr = styled.tr`
   height: 56px;
@@ -34,11 +34,11 @@ export const TypeIcon = styled.span<{ $type: MeterType }>`
 
   &::before {
     content: ${({ $type }) =>
-      $type === "ColdWaterAreaMeter" ? "'💧'" : "'🔥'"};
+      $type === 'ColdWaterAreaMeter' ? "'💧'" : "'🔥'"};
   }
 
   color: ${({ $type }) =>
-    $type === "ColdWaterAreaMeter" ? "#3b82f6" : "#ef4444"};
+    $type === 'ColdWaterAreaMeter' ? '#3b82f6' : '#ef4444'};
 `;
 
 export const AddressCell = styled.div`
