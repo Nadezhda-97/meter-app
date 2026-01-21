@@ -1,5 +1,3 @@
-// store списка счётчиков
-
 import { types, flow, getRoot } from "mobx-state-tree";
 import { Meter } from "../models/Meter";
 import type { RootStoreType } from "./RootStore";
@@ -52,13 +50,10 @@ export const MeterStore = types
 
         const data = yield res.json();
 
-        console.log('API Response:', data); // отладка
-
         self.count = data.count;
         self.meters.replace(data.results.map(mapApiMeter));
         self.offset = offset;
 
-        // добавляем адреса
         const areaIds = Array.from(
           new Set(
             self.meters
@@ -105,25 +100,6 @@ export const MeterStore = types
 
         self.meters.replace(self.meters.filter((meter) => meter.id !== id));
         self.count -= 1;
-
-        // локальный generator
-        /* try {
-          const nextOffset = self.offset + self.meters.length;
-          const nextRes = yield fetch(`/c300/api/v4/test/meters/?limit=1&offset=${nextOffset}`);
-          if (!nextRes.ok) return;
-
-          const data = yield nextRes.json();
-          if (data.results.length > 0) {
-            const newMeter = mapApiMeter(data.results[0]);
-            self.meters.push(newMeter);
-
-            if (newMeter.areaId) {
-              getRoot<RootStoreType>(self).areaStore.fetchAreas([newMeter.areaId]);
-            }
-          }
-        } catch (error) {
-          console.error("Failed to fetch next meter", error);
-        } */
 
         yield fetchNextMeter();
       } catch (error) {
