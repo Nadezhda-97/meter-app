@@ -18,8 +18,6 @@ export const Table = styled.table`
   border-spacing: 0;
 `;
 
-export const Thead = styled.thead``;
-
 export const Th = styled.th`
   position: sticky;
   top: 0;
