@@ -94,7 +94,7 @@ export const MeterStore = types
       });
 
       try {
-        const res = yield fetch(`/c300/api/v4/test/meters/${id}/`, {
+        const res = yield fetch(`https://showroom.eis24.me/c300/api/v4/test/meters/${id}/`, {
           method: 'DELETE',
         });
         //`${API_BASE}/v4/test/meters/${id}/`
