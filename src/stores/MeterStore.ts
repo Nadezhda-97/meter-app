@@ -94,9 +94,10 @@ export const MeterStore = types
       });
 
       try {
-        const res = yield fetch(`${API_BASE}/v4/test/meters/${id}/`, {
+        const res = yield fetch(`/c300/api/v4/test/meters/${id}/`, {
           method: 'DELETE',
         });
+        //`${API_BASE}/v4/test/meters/${id}/`
 
         if (!res.ok) {
           throw new Error(`HTTP ${res.status}`);
